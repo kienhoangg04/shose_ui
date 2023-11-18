@@ -1,0 +1,44 @@
+.break__crumb {
+    display: block;
+    width: 100%;
+    float: left;
+
+    .crumb__list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        font-size: 14px;
+        border-radius: 0;
+        font-weight: 400;
+        padding: 20px 0;
+        line-height: 24px;
+        background-color: transparent;
+        width: 100%;
+        text-align: left;
+        list-style: none;
+
+        & > li {
+            display: inline;
+
+            & > a {
+                color: #363636;
+            }
+
+            & > .mr_lr {
+                padding: 0px 3px;
+                color: #363636;
+
+                svg {
+                    transform: rotate(-290deg);
+                    font-size: 8px;
+                    padding: 0px 7px;
+                }
+            }
+
+            strong {
+                color: #35c0c5;
+                font-weight: 500;
+            }
+        }
+    }
+}

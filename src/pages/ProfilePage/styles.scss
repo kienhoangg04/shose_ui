@@ -1,0 +1,46 @@
+.profile__page {
+    margin-bottom: 30px;
+    padding: 20px 0;
+}
+.account__box {
+    & > .title {
+        font-family: 'Roboto', sans-serif;
+        font-size: 19px;
+        font-weight: 400;
+        color: #212b25;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
+
+    & > p {
+        font-weight: 700;
+        font-size: 14px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 16px;
+        margin-bottom: 28px;
+        color: #212b25;
+        position: relative;
+
+        & > span {
+            color: #35c0c5;
+        }
+    }
+
+    & > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .info {
+            font-weight: 400;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            color: #212b25;
+            margin-bottom: 22px;
+            display: block;
+        }
+        .active {
+            color: #35c0c5;
+        }
+    }
+}

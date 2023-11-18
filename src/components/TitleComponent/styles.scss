@@ -1,0 +1,39 @@
+.title__main {
+    width: 100%;
+    float: left;
+    position: relative;
+
+    & > .title {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0;
+        width: 100%;
+        border-bottom: 1px solid #ebebeb;
+        text-transform: uppercase;
+        float: left;
+        text-align: center;
+        letter-spacing: 0;
+        padding: 0 0 20px 0;
+        position: relative;
+
+        &::before {
+            content: '';
+            width: 100%;
+            position: absolute;
+            bottom: 5px;
+            background: #ebebeb;
+            height: 1px;
+            left: 0;
+        }
+
+        & > a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 99;
+        }
+    }
+}

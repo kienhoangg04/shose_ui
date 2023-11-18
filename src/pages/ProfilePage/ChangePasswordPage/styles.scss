@@ -1,0 +1,52 @@
+.change__box {
+    & > .title {
+        font-size: 19px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 22px;
+        font-weight: 400;
+        color: #212b25;
+        text-transform: uppercase;
+        margin-bottom: 27px;
+    }
+}
+
+.page__change {
+    & > .change__custom--password {
+        margin-bottom: 30px;
+
+        & > p {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.form__change {
+    & > .form__group {
+        margin: 0;
+        padding-bottom: 8px;
+        border: 0;
+
+        & > label {
+            cursor: pointer;
+            display: inline-block !important;
+            font-weight: 400;
+        }
+    }
+
+    & > .button {
+        line-height: 40px;
+        padding: 0 25px;
+        background: #35c0c5;
+        color: #fff;
+        border-radius: 0px;
+        font-size: 14px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        border: 1px solid transparent;
+
+        &:hover {
+            background: #fff;
+            color: #35c0c5;
+            border: 1px solid #35c0c5;
+        }
+    }
+}

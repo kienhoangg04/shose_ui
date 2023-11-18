@@ -1,0 +1,18 @@
+.btn__add {
+    float: right;
+    line-height: 30px;
+    padding: 0 20px;
+    margin: 1px 6px;
+    background: #35c0c5;
+    color: #fff;
+    border-radius: 0;
+    font-size: 14px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    border: 1px solid transparent;
+
+    &:hover {
+        background: #fff;
+        color: #35c0c5;
+        border: 1px solid #35c0c5;
+    }
+}

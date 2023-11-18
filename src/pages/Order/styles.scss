@@ -1,0 +1,243 @@
+.main__card {
+    min-height: 300px;
+
+    .wrap__backgroup {
+        margin-bottom: 30px !important;
+
+        .header__card {
+            & > .title__card {
+                color: #363636;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 22px;
+                font-weight: 500;
+                text-transform: uppercase;
+                margin-top: 30px;
+                font-weight: 700;
+            }
+        }
+
+        .card__destop {
+            float: none;
+            width: auto;
+
+            .form__card {
+                position: relative;
+                margin-bottom: 0px !important;
+
+                & > .bg__scroll {
+                    margin-top: 15px;
+                    overflow: hidden;
+                    border-top: none;
+                    border-bottom: none;
+                    border-right: none;
+                    background: #fff;
+
+                    & > .cart__thead {
+                        background: #ebebeb;
+                        font-weight: 700;
+                        font-size: 13px;
+                        clear: both;
+                        width: 100%;
+                        float: left;
+                        min-width: 600px;
+                        color: #333;
+                        border-top: 1px solid #ddd;
+                        border-bottom: 1px solid #ddd;
+                        padding: 0px;
+
+                        & > div {
+                            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+                            float: left;
+                            font-weight: 700;
+                            padding: 20px 0px;
+                            color: #333;
+                            text-align: center;
+                            font-size: 13px;
+                            border-right: 1px solid #ddd;
+                        }
+                    }
+
+                    & > .cart__body {
+                        width: 100%;
+                        float: left;
+                        border-top: 0px;
+                        border-bottom: 0px;
+
+                        & > .item__card {
+                            width: 100%;
+                            float: left;
+
+                            & > div {
+                                float: left;
+                                padding: 10px;
+                                line-height: 20px;
+                                vertical-align: top;
+                                height: 140px;
+                                display: -webkit-flex;
+                                -webkit-align-items: center;
+                                display: -ms-flexbox;
+                                display: flex;
+                                flex-flow: column;
+                                justify-content: center;
+                                border-right: 1px solid #ddd;
+                                border-bottom: 1px solid #ddd;
+
+                                & .product__image {
+                                    height: auto;
+                                    width: 100%;
+                                    float: left;
+                                    padding: 0 10px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+
+                                    & img {
+                                        max-width: 100%;
+                                        height: auto;
+                                        max-height: 98px;
+                                        width: auto;
+                                        display: inherit;
+                                    }
+                                }
+
+                                &:first-child {
+                                    border-left: 1px solid #e1e1e1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .cart__total {
+                width: 100%;
+                float: left;
+
+                & > .table__total {
+                    float: right;
+                    padding-right: 0;
+                    padding-left: 0;
+
+                    & > .table {
+                        margin: 0;
+                        width: 100%;
+                        color: #212529;
+
+                        & tr {
+                            width: 100%;
+                            float: left;
+                            border: 1px solid #ddd;
+                            margin-top: 30px;
+
+                            & .total__text {
+                                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                                font-weight: 700;
+                                padding-right: 5px;
+                                font-size: 14px;
+                                color: #333;
+                                width: 50%;
+                                border-right: 1px solid #ebebeb;
+                                padding: 20px;
+                                line-height: 20px;
+                            }
+                            & .totals__price {
+                                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                                font-weight: 700;
+                                font-size: 16px;
+                                color: #35c0c5;
+                                line-height: 20px;
+                                width: 50%;
+                                padding: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .continued {
+                width: 100%;
+                padding: 20px 0;
+                float: left !important;
+
+                & > .button__buy {
+                    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                    display: inline-block;
+                    font-size: 16px;
+                    color: #fff;
+                    border: solid 1px #35c0c5;
+                    font-weight: 400;
+                    text-align: center;
+                    width: 375px;
+                    text-decoration: none;
+                    border-radius: 0;
+                    float: right;
+                    background: #35c0c5;
+                    padding: 14px 20px;
+                    transition: all 0.3s linear;
+                    -moz-transition: all 0.3s linear;
+                    -webkit-transition: all 0.3s linear;
+                }
+            }
+        }
+    }
+}
+
+.number__product {
+    width: 80px;
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    margin: 0px !important;
+    border: none;
+    box-shadow: none;
+    height: 45px;
+    min-height: unset;
+    background: transparent;
+
+    & > .btn__num {
+        font-size: 11px;
+        line-height: 0px;
+        border: solid 1px #ebebeb;
+        display: inline-block;
+        width: 25px;
+        height: 23px;
+        background: #fff;
+        float: left;
+        color: #999;
+        text-align: center;
+        padding: 0px;
+        position: absolute;
+        padding-right: 0px;
+        line-height: 25px;
+        -webkit-transition: all ease 0.3s;
+        -moz-transition: all ease 0.3s;
+        -ms-transition: all ease 0.3s;
+        -o-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+    }
+    & > .num_1 {
+        bottom: 0;
+        right: 0;
+    }
+    & > .num_2 {
+        top: 0;
+        right: 0;
+    }
+    & > .prod__quantity {
+        display: block;
+        float: left;
+        color: #363636;
+        height: 45px;
+        border: 1px solid #ebebeb;
+        width: 80px;
+        text-align: center;
+        box-shadow: none;
+        padding: 5px 23px 5px 0;
+        font-size: 14px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        min-height: unset;
+        border-radius: 0;
+        margin: 0;
+        background: #fff;
+    }
+}

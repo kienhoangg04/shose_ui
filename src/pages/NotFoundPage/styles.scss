@@ -1,0 +1,14 @@
+.not-found {
+    position: relative;
+    & > img {
+        width: 100%;
+    }
+
+    & > .link-home {
+        font-size: 40px;
+        color: red;
+        position: absolute;
+        top: 30%;
+        left: 45%;
+    }
+}

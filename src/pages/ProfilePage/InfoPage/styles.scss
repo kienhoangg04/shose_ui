@@ -1,0 +1,19 @@
+.info__box {
+    & > .title {
+        font-size: 19px;
+        font-family: 'Roboto', sans-serif;
+        line-height: 22px;
+        font-weight: 400;
+        color: #212b25;
+        text-transform: uppercase;
+        margin-bottom: 27px;
+    }
+
+    & > .info {
+        margin-bottom: 40px;
+
+        & > p {
+            margin-bottom: 15px;
+        }
+    }
+}
