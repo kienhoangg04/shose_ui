@@ -49,6 +49,7 @@ function AdminProduct() {
     //
     const mutation = useMutationHook((data) => {
         const { title, image, type, price, price_old, countInStock, rating, description, sale } = data;
+        const percentSale = (((price_old - price) / price_old) * 100).toFixed(0);
         const res = productApi.createProduct({
             title,
             image,
@@ -58,13 +59,14 @@ function AdminProduct() {
             countInStock,
             rating,
             description,
-            sale,
+            sale: percentSale,
         });
         return res;
     });
     const mutationUpdate = useMutationHook((data) => {
         const { id, token, ...rests } = data;
-        const res = productApi.updateProduct(id, token, { ...rests });
+        const percentSale = (((data.price_old - data.price) / data.price_old) * 100).toFixed(0);
+        const res = productApi.updateProduct(id, token, { ...rests, sale: percentSale });
         return res;
     });
     const mutationDelete = useMutationHook((data) => {
@@ -82,7 +84,6 @@ function AdminProduct() {
     const { data: dataUpdated, isSuccess: isSuccessUpdated, isError: isErrorUpdated } = mutationUpdate;
     const { data: dataDeleted, isSuccess: isSuccessDeleted, isError: isErrorDeleted } = mutationDelete;
     const { data: dataDeletedMany, isSuccess: isSuccessDeletedMany, isError: isErrorDeletedMany } = mutationDeleteMany;
-
     //
     const fetchGetDetailsProduct = async (rowSelected) => {
         const res = await productApi.getDetailsProduct(rowSelected);
@@ -530,7 +531,7 @@ function AdminProduct() {
                     >
                         <InputComponent value={stateProduct.description} onChange={handleOnChange} name="description" />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         labelAlign="left"
                         label="Sale"
                         name="sale"
@@ -542,7 +543,7 @@ function AdminProduct() {
                         ]}
                     >
                         <InputComponent value={stateProduct.sale} onChange={handleOnChange} name="sale" />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         labelAlign="left"
                         label="Image"
@@ -715,7 +716,7 @@ function AdminProduct() {
                             name="description"
                         />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         labelAlign="left"
                         label="Sale"
                         name="sale"
@@ -727,7 +728,7 @@ function AdminProduct() {
                         ]}
                     >
                         <InputComponent value={stateProductDetails.sale} onChange={handleOnChangeDetails} name="sale" />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         labelAlign="left"
                         label="Image"

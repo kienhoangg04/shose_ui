@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
@@ -15,11 +17,13 @@ root.render(
     // <React.StrictMode>
     <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-            <BrowserRouter>
-                <GlobalStyles>
-                    <App />
-                </GlobalStyles>
-            </BrowserRouter>
+            <PersistGate loading={null} persistor={persistor}>
+                <BrowserRouter>
+                    <GlobalStyles>
+                        <App />
+                    </GlobalStyles>
+                </BrowserRouter>
+            </PersistGate>
         </Provider>
         <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>,

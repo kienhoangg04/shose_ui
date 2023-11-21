@@ -5,6 +5,7 @@ import noimg from '../../assets/images/No-Image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { convertPrice } from '../../utils';
 
 function Card(props) {
     const { id, key, countInStock, description, image, price, price_old, rating, title, type, sale } = props;
@@ -27,7 +28,8 @@ function Card(props) {
                         </a>
                     </h3>
                     <div className="price__box">
-                        {price}đ<span className="compare__price">{price_old}đ</span>
+                        {convertPrice(price)}
+                        <span className="compare__price">{convertPrice(price_old)}</span>
                     </div>
                 </div>
                 <div className="product__action">

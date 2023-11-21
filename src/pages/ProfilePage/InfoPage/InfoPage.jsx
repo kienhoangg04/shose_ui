@@ -4,15 +4,14 @@ import { useSelector } from 'react-redux';
 
 function InfoPage() {
     const user = useSelector((state) => state.user);
-
     return (
         <div className="info__box">
             <h1 className="title">Thông tin tài khoản</h1>
             <div className="info">
-                {user.username && (
+                {user.name && (
                     <p>
                         <strong>Họ tên: </strong>
-                        {user.username}
+                        {user.name}
                     </p>
                 )}
                 {user.email && (

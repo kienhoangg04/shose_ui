@@ -15,6 +15,7 @@ import { Rate } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import * as message from '../../components/Message/Message';
 import { addOrderProduct } from '../../redux/slides/orderSlides';
+import { convertPrice } from '../../utils';
 
 function DetailsProduct() {
     const user = useSelector((state) => state.user);
@@ -151,12 +152,12 @@ function DetailsProduct() {
                                             <div className="price__box">
                                                 <span className="special__price">
                                                     <span className="price product-price">
-                                                        {productDetails?.price}đ
+                                                        {convertPrice(productDetails?.price)}
                                                     </span>
                                                 </span>
                                                 <span className="old__price">
                                                     <span className="price product-price sale">
-                                                        {productDetails?.price_old}đ
+                                                        {convertPrice(productDetails?.price_old)}
                                                     </span>
                                                 </span>
                                             </div>

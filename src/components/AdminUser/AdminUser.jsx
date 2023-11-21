@@ -5,7 +5,6 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import userApi from '../../api/userApi';
 import { useMutationHook } from '../../hooks/useMutationHook';
-import { getBase64 } from '../../utils';
 import DrawerComponent from '../DrawerComponent/DrawerComponent';
 import InputComponent from '../InputComponent/InputComponent';
 import * as message from '../Message/Message';
@@ -22,10 +21,10 @@ function AdminUser() {
 
     const [stateUserDetails, setStateUserDetails] = useState({
         username: '',
+        name: '',
         email: '',
         isAdmin: false,
         phone: '',
-        dateOfBirth: '',
         address: '',
     });
     const [form] = Form.useForm();
@@ -56,10 +55,11 @@ function AdminUser() {
         if (res?.data) {
             setStateUserDetails({
                 username: res?.data.username,
+                name: res?.data?.name,
                 email: res?.data.email,
                 isAdmin: res?.data.isAdmin,
                 phone: res?.data.phone,
-                dateOfBirth: res?.data.dateOfBirth,
+
                 address: res?.data.address,
             });
         }
@@ -105,6 +105,11 @@ function AdminUser() {
             sorter: (a, b) => a.username.length - b.username.length,
         },
         {
+            title: 'Họ và tên',
+            dataIndex: 'name',
+            sorter: (a, b) => a.name.length - b.name.length,
+        },
+        {
             title: 'Email',
             dataIndex: 'email',
             sorter: (a, b) => a.email.length - b.email.length,
@@ -126,10 +131,6 @@ function AdminUser() {
         {
             title: 'Phone',
             dataIndex: 'phone',
-        },
-        {
-            title: 'DateOfBirth',
-            dataIndex: 'dateOfBirth',
         },
         {
             title: 'Address',
@@ -213,10 +214,10 @@ function AdminUser() {
         setIsOpenDrawer(false);
         setStateUserDetails({
             username: '',
+            name: '',
             email: '',
             isAdmin: false,
             phone: '',
-            dateOfBirth: '',
             address: '',
         });
         form.resetFields();
@@ -315,6 +316,19 @@ function AdminUser() {
                     </Form.Item>
                     <Form.Item
                         labelAlign="left"
+                        label="Name"
+                        name="name"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your name!',
+                            },
+                        ]}
+                    >
+                        <InputComponent value={stateUserDetails.name} onChange={handleOnChangeDetails} name="name" />
+                    </Form.Item>
+                    <Form.Item
+                        labelAlign="left"
                         label="Email"
                         name="email"
                         rules={[
@@ -339,7 +353,7 @@ function AdminUser() {
                     >
                         <InputComponent value={stateUserDetails.phone} onChange={handleOnChangeDetails} name="phone" />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         labelAlign="left"
                         label="DateOfBirth"
                         name="dateOfBirth"
@@ -355,7 +369,7 @@ function AdminUser() {
                             onChange={handleOnChangeDetails}
                             name="dateOfBirth"
                         />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         labelAlign="left"
                         label="Address"

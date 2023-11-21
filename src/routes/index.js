@@ -13,6 +13,7 @@ import ProductType from '../pages/ProductType/ProductType';
 import Order from '../pages/Order/Order';
 import Introduce from '../pages/Introduce/Introduce';
 import Search from '../pages/Search/Search';
+import Checkout from '../pages/Checkout/Checkout';
 
 // Page2
 import OrderPage from '../pages/ProfilePage/OrderPage/OrderPage';
@@ -32,6 +33,7 @@ const publicRoutes = [
     { path: '/product/:type', page: ProductType, layout: Layout },
     { path: '/details/:id', page: DetailsProduct, layout: HeaderOnly },
     { path: '/order', page: Order, layout: HeaderOnly },
+    { path: '/checkout', page: Checkout, layout: null },
     { path: '/search', page: Search, layout: Layout },
     { path: '/introduce', page: Introduce, layout: HeaderOnly },
     { path: '/sign-in', page: SignIn, layout: HeaderOnly },

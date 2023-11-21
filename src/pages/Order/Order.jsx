@@ -1,18 +1,19 @@
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ImageCard from '../../components/ImageCardComponent/ImageCard';
 import { decreaseAmount, increaseAmount, removeOrderProduct } from '../../redux/slides/orderSlides';
+import { convertPrice } from '../../utils';
 import './styles.scss';
 
 function Order() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const order = useSelector((state) => state.order);
-
-    console.log('order', order);
+    const user = useSelector((state) => state.user);
 
     const handleChangeCount = (type, idProduct) => {
         if (type === 'increase') {
@@ -25,8 +26,32 @@ function Order() {
 
     const handleDeleteOrder = (idProduct) => {
         dispatch(removeOrderProduct({ idProduct }));
-        console.log('id', idProduct);
     };
+
+    const priceMemo = useMemo(() => {
+        const result = order?.orderItems?.reduce((total, cur) => {
+            return total + cur.price * cur.amount;
+        }, 0);
+        return result;
+    }, [order]);
+
+    const diliveryPriceMemo = useMemo(() => {
+        if (priceMemo <= 0) {
+            return 0;
+        } else if (priceMemo > 500000) {
+            return 10000;
+        } else {
+            return 20000;
+        }
+    }, [priceMemo]);
+
+    // tien hanh mua hang
+    const handleAddCard = () => {
+        navigate('/checkout');
+    };
+
+    console.log('order', order);
+    console.log('user', user);
 
     return (
         <div className="main__card">
@@ -71,7 +96,7 @@ function Order() {
                                                     </div>
                                                     <div style={{ width: '15%' }}>
                                                         <span className="cart__prices">
-                                                            <span className="prices">{order?.price}đ</span>
+                                                            <span className="prices">{convertPrice(order?.price)}</span>
                                                         </span>
                                                     </div>
                                                     <div style={{ width: '14%' }}>
@@ -103,7 +128,7 @@ function Order() {
                                                     <div style={{ width: '15%' }}>
                                                         <span className="cart__prices">
                                                             <span className="prices">
-                                                                {order?.amount * order?.price}đ
+                                                                {convertPrice(order?.amount * order?.price)}
                                                             </span>
                                                         </span>
                                                     </div>
@@ -111,6 +136,7 @@ function Order() {
                                                         <FontAwesomeIcon
                                                             icon={faTrash}
                                                             onClick={() => handleDeleteOrder(order?.product)}
+                                                            style={{ cursor: 'pointer' }}
                                                         />
                                                     </div>
                                                 </div>
@@ -121,13 +147,18 @@ function Order() {
                                 <div className="col-lg-12 col-md-12">
                                     <div className="cart__total">
                                         <div className="table__total col-lg-4 col-lg-offset-8 col-xl-4 col-xl-offset-8">
+                                            <div className="dilivery">
+                                                Phí vận chuyển {convertPrice(diliveryPriceMemo)}
+                                            </div>
                                             <table className="table">
                                                 <tbody>
                                                     <tr>
                                                         <td colSpan={20} className="total__text">
                                                             Tổng tiền
                                                         </td>
-                                                        <td className="totals__price">450.000d</td>
+                                                        <td className="totals__price">
+                                                            {convertPrice(priceMemo + diliveryPriceMemo)}
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -136,7 +167,9 @@ function Order() {
                                 </div>
                                 <div className="col-lg-12 col-md-12">
                                     <div className="continued">
-                                        <button className="button__buy">Tiến hành thanh toán</button>
+                                        <button className="button__buy" onClick={() => handleAddCard()}>
+                                            Tiến hành thanh toán
+                                        </button>
                                     </div>
                                 </div>
                             </Row>

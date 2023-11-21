@@ -1,15 +1,84 @@
-.signin__box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.53);
-    height: 100vh;
+.signin {
+    min-height: 400px;
+}
+.signin__form {
+    width: 100%;
+    float: left;
+    .pass {
+        position: relative;
+    }
+
+    & > .title {
+        font-size: 14px;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    & > .input_form {
+        & > span {
+            font-weight: bold;
+        }
+        & > strong {
+            color: red;
+            margin-left: 2px;
+        }
+
+        & .show__password {
+            position: absolute;
+            top: 32px;
+            right: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .forget__password {
+        width: 100%;
+        text-align: right;
+
+        & .btn__forget {
+            color: #337ab7;
+            border: none;
+            padding: 4px;
+            margin: 4px 0;
+            background: transparent;
+        }
+    }
+
+    .login {
+        .btn__login {
+            border: none;
+            color: #fff;
+            background: #35c0c5;
+            font-size: 18px;
+            padding: 6px 20px;
+        }
+    }
 }
 
-.signin__form {
-    width: 800px;
-    height: 445px;
-    border-radius: 6px;
-    background: #fff;
-    padding: 40px 20px 25px;
+.form__style {
+    width: 100%;
+    float: left;
+
+    & > .title {
+        font-size: 14px;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    & > .info {
+        margin: 10px 0;
+
+        & > p {
+            margin: 10px 0;
+        }
+    }
+    & > .acount__link {
+        & > .btn__acount {
+            border: none;
+            color: #fff;
+            background: #35c0c5;
+            font-size: 18px;
+            padding: 6px 20px;
+        }
+    }
 }

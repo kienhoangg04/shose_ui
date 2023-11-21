@@ -1,15 +1,65 @@
-.signup__box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.53);
-    height: 100vh;
-}
+.signup {
+    min-height: 400px;
 
-.signup__form {
-    width: 800px;
-    height: 550px;
-    border-radius: 6px;
-    background: #fff;
-    padding: 40px 20px 25px;
+    .signup__head {
+        width: 100%;
+        text-align: center;
+
+        & > .title {
+            font-size: 14px;
+            margin: 20px 0 30px;
+        }
+    }
+
+    .signup__form {
+        & > .input__form {
+            width: 100%;
+            margin: 4px 0;
+
+            & > span {
+                font-weight: bold;
+                margin-right: 4px;
+            }
+            & > strong {
+                color: red;
+            }
+        }
+
+        & > .pass {
+            position: relative;
+        }
+        & .show__password {
+            position: absolute;
+            top: 32px;
+            right: 6px;
+            cursor: pointer;
+        }
+
+        & > .repass {
+            position: relative;
+        }
+        & .show__repassword {
+            position: absolute;
+            top: 32px;
+            right: 6px;
+            cursor: pointer;
+        }
+
+        & .btn__signup {
+            border: none;
+            color: #fff;
+            background: #35c0c5;
+            font-size: 18px;
+            padding: 6px 20px;
+            margin-right: 4px;
+        }
+        & .btn__signin {
+            border: none;
+            color: #fff;
+            background: #35c0c5;
+            font-size: 18px;
+            padding: 6px 20px;
+            margin-left: 4px;
+        }
+    }
 }

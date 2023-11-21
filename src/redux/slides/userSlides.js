@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     username: '',
+    name: '',
     email: '',
     phone: '',
     dateOfBirth: '',
@@ -9,6 +10,7 @@ const initialState = {
     avatar: '',
     access_token: '',
     isAdmin: false,
+    city: '',
 };
 
 export const useSlide = createSlice({
@@ -18,6 +20,7 @@ export const useSlide = createSlice({
         updateUser: (state, action) => {
             const {
                 username = '',
+                name = '',
                 email = '',
                 phone = '',
                 dateOfBirth = '',
@@ -26,8 +29,10 @@ export const useSlide = createSlice({
                 _id = '',
                 access_token = '',
                 isAdmin = '',
+                city = '',
             } = action.payload;
             state.username = username;
+            state.name = name;
             state.email = email;
             state.phone = phone;
             state.dateOfBirth = dateOfBirth;
@@ -36,9 +41,11 @@ export const useSlide = createSlice({
             state.id = _id;
             state.access_token = access_token;
             state.isAdmin = isAdmin;
+            state.city = city;
         },
         resetUser: (state) => {
             state.username = '';
+            state.name = '';
             state.email = '';
             state.phone = '';
             state.dateOfBirth = '';
@@ -47,6 +54,7 @@ export const useSlide = createSlice({
             state.id = '';
             state.access_token = '';
             state.isAdmin = false;
+            state.city = '';
         },
     },
 });

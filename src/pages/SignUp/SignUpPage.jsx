@@ -8,12 +8,15 @@ import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import { useMutationHook } from '../../hooks/useMutationHook';
 import './styles.scss';
+import { Col, Container, Row } from 'react-bootstrap';
 
 function SignUpPage() {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState();
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -38,12 +41,17 @@ function SignUpPage() {
             password,
             email,
             confirmPassword: repassword,
+            phone,
+            name,
         });
     };
 
     //
     const handleOnChangeUsername = (value) => {
         setUsername(value);
+    };
+    const handleOnChangeName = (value) => {
+        setName(value);
     };
     const handleOnChangeEmail = (value) => {
         setEmail(value);
@@ -54,74 +62,129 @@ function SignUpPage() {
     const handleOnChangeRepassword = (value) => {
         setRepassword(value);
     };
+    const handleOnChangePhone = (value) => {
+        setPhone(value);
+    };
+
+    const navigateSignIn = () => {
+        navigate('/sign-in');
+    };
 
     return (
-        <div className="signup__box">
-            <div className="signup__form">
-                <h2>Đăng ký</h2>
-                <Link to="/sign-in">Đã có tài khoản?</Link>
+        <Container>
+            <div className="signup">
+                <Row>
+                    <div className="signup__head">
+                        <h2 className="title">Thông tin đăng ký</h2>
+                    </div>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        <div className="signup__form">
+                            <div className="input__form">
+                                <span>Email</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Email"
+                                    type="text"
+                                    value={email}
+                                    handleOnChange={handleOnChangeEmail}
+                                    className="input"
+                                />
+                            </div>
+                            <div className="input__form pass">
+                                <span>Mật khẩu</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Mật khẩu"
+                                    type={isShowPassword ? 'text' : 'password'}
+                                    value={password}
+                                    handleOnChange={handleOnChangePassword}
+                                    className="input"
+                                />
+                                <span onClick={() => setIsShowPassword(!isShowPassword)} className="show__password">
+                                    {isShowPassword ? (
+                                        <FontAwesomeIcon icon={faEye} />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faEyeSlash} />
+                                    )}
+                                </span>
+                            </div>
 
-                <div>
-                    <div>
-                        <span>Username</span>
-                        <InputForm
-                            placeholder="Username"
-                            type="text"
-                            value={username}
-                            handleOnChange={handleOnChangeUsername}
-                            className="input"
-                        />
-                    </div>
-
-                    <div>
-                        <span>Email</span>
-                        <InputForm
-                            placeholder="Email"
-                            type="text"
-                            value={email}
-                            handleOnChange={handleOnChangeEmail}
-                            className="input"
-                        />
-                    </div>
-                    <div>
-                        <span>Mật khẩu</span>
-                        <InputForm
-                            placeholder="Mật khẩu"
-                            type={isShowPassword ? 'text' : 'password'}
-                            value={password}
-                            handleOnChange={handleOnChangePassword}
-                            className="input"
-                        />
-                        <span onClick={() => setIsShowPassword(!isShowPassword)}>
-                            {isShowPassword ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
-                        </span>
-                    </div>
-
-                    <div>
-                        <span>Nhập lại mật khẩu</span>
-                        <InputForm
-                            placeholder="Nhập lại mật khẩu"
-                            type={isShowRePassword ? 'text' : 'password'}
-                            value={repassword}
-                            handleOnChange={handleOnChangeRepassword}
-                            className="input"
-                        />
-                        <span onClick={() => setIsShowRePassword(!isShowRePassword)}>
-                            {isShowRePassword ? (
-                                <FontAwesomeIcon icon={faEye} />
-                            ) : (
-                                <FontAwesomeIcon icon={faEyeSlash} />
-                            )}
-                        </span>
-                    </div>
-                    {data?.status === 'ERR' && <span>{data?.message}</span>}
-                    <br />
-                    <Loading isLoading={isLoading}>
-                        <button onClick={handleSignUp}>Đăng ký</button>
-                    </Loading>
-                </div>
+                            <div className="input__form repass">
+                                <span>Nhập lại mật khẩu</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Nhập lại mật khẩu"
+                                    type={isShowRePassword ? 'text' : 'password'}
+                                    value={repassword}
+                                    handleOnChange={handleOnChangeRepassword}
+                                    className="input"
+                                />
+                                <span
+                                    onClick={() => setIsShowRePassword(!isShowRePassword)}
+                                    className="show__repassword"
+                                >
+                                    {isShowRePassword ? (
+                                        <FontAwesomeIcon icon={faEye} />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faEyeSlash} />
+                                    )}
+                                </span>
+                            </div>
+                            {data?.status === 'ERR' && <span style={{ color: 'red' }}>{data?.message}</span>}
+                            <br />
+                            <Loading isLoading={isLoading}>
+                                <button onClick={handleSignUp} className="btn__signup">
+                                    Đăng ký
+                                </button>
+                                <span>hoặc</span>
+                                <button onClick={navigateSignIn} className="btn__signin">
+                                    Đăng nhập
+                                </button>
+                            </Loading>
+                        </div>
+                    </Col>
+                    <Col xs={6}>
+                        <div className="signup__form">
+                            <div className="input__form">
+                                <span>Username</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Username"
+                                    type="text"
+                                    value={username}
+                                    handleOnChange={handleOnChangeUsername}
+                                    className="input"
+                                />
+                            </div>
+                            <div className="input__form">
+                                <span>Họ và tên</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Họ và tên"
+                                    type="text"
+                                    value={name}
+                                    handleOnChange={handleOnChangeName}
+                                    className="input"
+                                />
+                            </div>
+                            <div className="input__form">
+                                <span>Phone</span>
+                                <strong>*</strong>
+                                <InputForm
+                                    placeholder="Phone"
+                                    type="text"
+                                    value={phone}
+                                    handleOnChange={handleOnChangePhone}
+                                    className="input"
+                                />
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
             </div>
-        </div>
+        </Container>
     );
 }
 
