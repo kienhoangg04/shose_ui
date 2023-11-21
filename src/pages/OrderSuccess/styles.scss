@@ -1,0 +1,130 @@
+.success__box {
+    .head__success {
+        margin-bottom: 30px;
+
+        & h2 {
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        & p {
+            margin: 0;
+        }
+    }
+    .info__success {
+        border: 1px solid #ccc;
+        padding: 20px;
+
+        .title {
+            color: #333;
+            font-weight: 500;
+        }
+        .info__list {
+            list-style: none;
+            padding: 0;
+
+            .info__item {
+                padding: 4px 0;
+                color: #333;
+            }
+        }
+    }
+    .foot__success {
+        text-align: right;
+        margin-top: 40px;
+        .btn_continue {
+            padding: 12px 10px;
+            background: #357ebd;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+
+    .order_box {
+        .head_success {
+            & h2 {
+                color: #333;
+                font-weight: 600;
+                font-size: 16px;
+            }
+        }
+
+        .order__summary {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid rgba(175, 175, 175, 0.34);
+
+            & > .product_form {
+                width: 100%;
+                padding: 10px 0;
+                margin: 0;
+                .product_table {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    font-size: 1em;
+                    width: 100%;
+                    margin: 0;
+                    .product {
+                        .product__image {
+                            padding-top: 10px;
+                            .product__thumbnail {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 8px;
+                                background: #fff;
+                                position: relative;
+                                overflow: visible;
+
+                                .product__wrap {
+                                    width: 100%;
+                                    height: 100%;
+                                    overflow: hidden;
+                                    border-radius: 8px;
+
+                                    & img {
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                        margin: auto;
+                                    }
+
+                                    & .product__quantity {
+                                        font-size: 12px;
+                                        white-space: nowrap;
+                                        border-radius: 2em;
+                                        background-color: #2a9dcc;
+                                        color: #fff;
+                                        position: absolute;
+                                        right: -6px;
+                                        top: -6px;
+                                        z-index: 3;
+                                        box-sizing: border-box;
+                                        min-width: 20px;
+                                        height: 20px;
+                                        text-align: center;
+                                        line-height: 20px;
+                                    }
+                                }
+                            }
+                        }
+
+                        .product__description {
+                            padding-left: 6px;
+
+                            .product__description--name {
+                                color: #333;
+                                font-weight: 500;
+                            }
+                        }
+                        .product__price {
+                            text-align: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

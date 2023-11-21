@@ -2,21 +2,24 @@ import { faAngleLeft, faCircleDot, faRightToBracket } from '@fortawesome/free-so
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ImageComponent from '../../components/ImageComponent/Image';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import './styles.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutationHook } from '../../hooks/useMutationHook';
 import userApi from '../../api/userApi';
 import { convertPrice } from '../../utils';
 import * as message from '../../components/Message/Message';
 import orderApi from '../../api/orderApi';
 import Loading from '../../components/LoadingComponent/Loading';
+import { removeAllOrderProduct } from '../../redux/slides/orderSlides';
 
 function Checkout() {
     const order = useSelector((state) => state.order);
     const user = useSelector((state) => state.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [payment, setPayment] = useState('');
     const [stateUser, setStateUser] = useState({
@@ -45,26 +48,6 @@ function Checkout() {
         isSuccess: isSuccessOrder,
         isError: isErrorOrder,
     } = mutationAddOrder;
-    console.log('dataAddOrder', dataAddOrder);
-    useEffect(() => {
-        if (isSuccessOrder && dataAddOrder?.status === 'OK') {
-            message.success('Bạn đã đặt hàng thành công!');
-        } else if (isErrorOrder) {
-            message.error('Đặt hàng thất bại!');
-        }
-    }, [isSuccessOrder, isErrorOrder]);
-
-    useEffect(() => {
-        if (user) {
-            setStateUser({
-                name: user.name,
-                email: user.email,
-                phone: user.phone,
-                address: user.address,
-                city: user.city,
-            });
-        }
-    }, [user]);
 
     const priceMemo = useMemo(() => {
         const result = order?.orderItems?.reduce((total, cur) => {
@@ -82,6 +65,40 @@ function Checkout() {
             return 20000;
         }
     }, [priceMemo]);
+
+    useEffect(() => {
+        if (isSuccessOrder && dataAddOrder?.status === 'OK') {
+            const arrayOrder = [];
+            order?.orderItems.forEach((element) => {
+                arrayOrder.push(element.product);
+            });
+            message.success('Bạn đã đặt hàng thành công!');
+            navigate('/order-success', {
+                state: {
+                    payment,
+                    totalPrice: priceMemo,
+                    diliveryPrice: diliveryPriceMemo,
+                    orders: order?.orderItems,
+                    user: stateUser,
+                },
+            });
+            dispatch(removeAllOrderProduct({ listChecked: arrayOrder }));
+        } else if (isErrorOrder) {
+            message.error('Đặt hàng thất bại!');
+        }
+    }, [isSuccessOrder, isErrorOrder]);
+
+    useEffect(() => {
+        if (user) {
+            setStateUser({
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                address: user.address,
+                city: user.city,
+            });
+        }
+    }, [user]);
 
     const handleOnChangeInfo = (e) => {
         setStateUser({
@@ -126,11 +143,11 @@ function Checkout() {
         setPayment(checkValue);
     };
 
-    console.log('order', order);
-    console.log('user', user);
-    console.log('stateUser', stateUser);
-    console.log('dataUpdate', dataUpdate);
-    console.log('payment', payment);
+    // console.log('order', order);
+    // console.log('user', user);
+    // console.log('stateUser', stateUser);
+    // console.log('dataUpdate', dataUpdate);
+    // console.log('payment', payment);
 
     return (
         <div>
@@ -264,7 +281,9 @@ function Checkout() {
                                                     <td className="product__description">
                                                         <span className="product__description--name">{item?.name}</span>
                                                     </td>
-                                                    <td className="product__price">{convertPrice(item?.price)}</td>
+                                                    <td className="product__price">
+                                                        {convertPrice(item?.price * item?.amount)}
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>

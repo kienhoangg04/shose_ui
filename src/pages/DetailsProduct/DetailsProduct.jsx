@@ -1,21 +1,21 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Rate } from 'antd';
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import productApi from '../../api/productApi';
 import Card from '../../components/CardComponent/Card';
 import ImageCard from '../../components/ImageCardComponent/ImageCard';
 import Loading from '../../components/LoadingComponent/Loading';
-import TitleComponent from '../../components/TitleComponent/TitleComponent';
-import './styles.scss';
-import { Rate } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import * as message from '../../components/Message/Message';
+import TitleComponent from '../../components/TitleComponent/TitleComponent';
 import { addOrderProduct } from '../../redux/slides/orderSlides';
 import { convertPrice } from '../../utils';
+import './styles.scss';
 
 function DetailsProduct() {
     const user = useSelector((state) => state.user);
@@ -70,6 +70,7 @@ function DetailsProduct() {
             navigate('/sign-in', { state: location?.pathname });
             message.warning('Vui lòng đăng nhập trước khi thực hiện mua!');
         } else {
+            message.success('Thêm sản phảm vào giỏ hàng!');
             dispatch(
                 addOrderProduct({
                     orderItem: {
