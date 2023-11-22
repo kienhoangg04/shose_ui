@@ -9,6 +9,14 @@ const orderApi = {
         });
         return res.data;
     },
+    async getOrderByUserId(id, access_token) {
+        const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/order/get-order-details/${id}`, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
 };
 
 export default orderApi;

@@ -12,7 +12,6 @@ function OrderSuccess() {
     const location = useLocation();
 
     const { state } = location;
-    // console.log('state', state);
 
     const handleNavigate = () => {
         navigate('/');

@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ImageCard from '../../components/ImageCardComponent/ImageCard';
 import { decreaseAmount, increaseAmount, removeOrderProduct } from '../../redux/slides/orderSlides';
 import { convertPrice } from '../../utils';
+import * as message from '../../components/Message/Message';
 import './styles.scss';
 
 function Order() {
@@ -47,7 +48,11 @@ function Order() {
 
     // tien hanh mua hang
     const handleAddCard = () => {
-        navigate('/checkout');
+        if (user?.access_token) {
+            navigate('/checkout');
+        } else {
+            message.error('Lỗi, chua fix');
+        }
     };
 
     console.log('order', order);

@@ -83,6 +83,8 @@ function Checkout() {
                 },
             });
             dispatch(removeAllOrderProduct({ listChecked: arrayOrder }));
+        } else if (isSuccessOrder && dataAddOrder?.status === 'ERR') {
+            message.error('Vượt quá số lượng trong kho!');
         } else if (isErrorOrder) {
             message.error('Đặt hàng thất bại!');
         }

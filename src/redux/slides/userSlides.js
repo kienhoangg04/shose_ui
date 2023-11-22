@@ -11,6 +11,7 @@ const initialState = {
     access_token: '',
     isAdmin: false,
     city: '',
+    id: '',
 };
 
 export const useSlide = createSlice({

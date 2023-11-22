@@ -38,6 +38,12 @@ function InfoPage() {
                         {user.address}
                     </p>
                 )}
+                {user.city && (
+                    <p>
+                        <strong>City: </strong>
+                        {user.city}
+                    </p>
+                )}
             </div>
         </div>
     );

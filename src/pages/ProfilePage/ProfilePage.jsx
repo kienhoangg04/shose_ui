@@ -32,11 +32,11 @@ function ProfilePage({ children }) {
                                         Đổi mật khẩu
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link to={'/profile/address'} className="info">
                                         Số địa chỉ
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                     </div>

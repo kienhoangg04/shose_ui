@@ -171,7 +171,7 @@ function DetailsProduct() {
                                             </div>
                                         </div>
                                         <div className="form__product col-sm-12 col-lg-12 col-md-12 col-xs-12">
-                                            <div className="box__variant">
+                                            {/* <div className="box__variant">
                                                 <div className="form__group">
                                                     <div className="selector__wrapper">
                                                         <label htmlFor="">Màu sắc</label>
@@ -182,7 +182,7 @@ function DetailsProduct() {
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="form__group">
                                                 <div className="form__product--content">
                                                     <div className="quantity">
