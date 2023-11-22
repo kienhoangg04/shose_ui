@@ -55,9 +55,6 @@ function Order() {
         }
     };
 
-    console.log('order', order);
-    console.log('user', user);
-
     return (
         <div className="main__card">
             <Container>

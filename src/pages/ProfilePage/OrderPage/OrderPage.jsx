@@ -3,9 +3,9 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import orderApi from '../../../api/orderApi';
 import Loading from '../../../components/LoadingComponent/Loading';
-import './styles.scss';
-import { convertPrice } from '../../../utils';
 import { orderContant } from '../../../contant';
+import { convertPrice } from '../../../utils';
+import './styles.scss';
 
 function OrderPage() {
     const user = useSelector((state) => state.user);
@@ -19,7 +19,7 @@ function OrderPage() {
             enabled: user?.id && user?.access_token,
         },
     );
-    const { data, isLoading } = queryOrder;
+    const { data = [], isLoading } = queryOrder;
 
     return (
         <Loading isLoading={isLoading}>
@@ -39,17 +39,19 @@ function OrderPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.orderItems.length > 0 ? (
-                                    <tr>
-                                        <td>a</td>
-                                        <td>{data?.createdAt}</td>
-                                        <td>
-                                            {data?.shippingAdress?.address}, {data?.shippingAdress?.city}, Việt Nam
-                                        </td>
-                                        <td>{convertPrice(data?.totalPrice)}</td>
-                                        <td>{orderContant.payment[data?.paymentMethod]}</td>
-                                        <td>Chưa vận chuyển</td>
-                                    </tr>
+                                {data[0]?.orderItems.length > 0 ? (
+                                    data?.map((item) => (
+                                        <tr>
+                                            <td>a</td>
+                                            <td>{item?.createdAt}</td>
+                                            <td>
+                                                {item?.shippingAdress?.address}, {item?.shippingAdress?.city}, Việt Nam
+                                            </td>
+                                            <td>{convertPrice(item?.totalPrice)}</td>
+                                            <td>{orderContant.payment[item?.paymentMethod]}</td>
+                                            <td>Chưa vận chuyển</td>
+                                        </tr>
+                                    ))
                                 ) : (
                                     <tr>
                                         <td colSpan={6}>

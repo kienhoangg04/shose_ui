@@ -20,8 +20,7 @@ function AdminProduct() {
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [rowSelected, setRowSelected] = useState('');
-    const [typeSelect, setTypeSelect] = useState('');
-    const [stateProduct, setStateProduct] = useState({
+    const initial = () => ({
         title: '',
         type: '',
         price: '',
@@ -33,17 +32,8 @@ function AdminProduct() {
         sale: '',
         newType: '',
     });
-    const [stateProductDetails, setStateProductDetails] = useState({
-        title: '',
-        type: '',
-        price: '',
-        price_old: '',
-        countInStock: '',
-        rating: '',
-        description: '',
-        image: '',
-        sale: '',
-    });
+    const [stateProduct, setStateProduct] = useState(initial());
+    const [stateProductDetails, setStateProductDetails] = useState(initial());
     const [form] = Form.useForm();
 
     //
@@ -60,6 +50,7 @@ function AdminProduct() {
             rating,
             description,
             sale: percentSale,
+            quantity: countInStock,
         });
         return res;
     });
@@ -111,8 +102,12 @@ function AdminProduct() {
 
     //
     useEffect(() => {
-        form.setFieldsValue(stateProductDetails);
-    }, [form, stateProductDetails]);
+        if (!isModalOpen) {
+            form.setFieldsValue(stateProductDetails);
+        } else {
+            form.setFieldsValue(initial());
+        }
+    }, [form, stateProductDetails, isModalOpen]);
     //
     useEffect(() => {
         if (rowSelected && isOpenDrawer) {
@@ -168,6 +163,14 @@ function AdminProduct() {
         {
             title: 'Count In Stock',
             dataIndex: 'countInStock',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+        },
+        {
+            title: 'Selled',
+            dataIndex: 'selled',
         },
         {
             title: 'Sale',
