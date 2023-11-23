@@ -1,10 +1,11 @@
-import { AppstoreOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, UserOutlined, ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AdminProduct from '../../components/AdminProduct/AdminProduct';
 import AdminUser from '../../components/AdminUser/AdminUser';
+import AdminOrder from '../../components/AdminOrder/AdminOrder';
 import TitleComponent from '../../components/TitleComponent/TitleComponent';
 
 function getItem(label, key, icon, children, type) {
@@ -19,7 +20,8 @@ function getItem(label, key, icon, children, type) {
 const items = [
     getItem('Quản lý người dùng', 'user', <UserOutlined />),
     getItem('Quản lý sản phẩm', 'product', <AppstoreOutlined />),
-    getItem('Trang người dùng', 'view', <UserOutlined />),
+    getItem('Quản lý đơn hàng', 'order', <ShoppingCartOutlined />),
+    getItem('Trang người dùng', 'view', <EyeOutlined />),
 ];
 
 function AdminPage() {
@@ -37,6 +39,8 @@ function AdminPage() {
                 return <AdminUser />;
             case 'product':
                 return <AdminProduct />;
+            case 'order':
+                return <AdminOrder />;
             case 'view':
                 return navigate('/');
             default:

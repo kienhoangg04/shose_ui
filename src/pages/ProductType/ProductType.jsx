@@ -1,29 +1,50 @@
-import React, { useEffect } from 'react';
-import './styles.scss';
-import CardComponent from '../../components/CardComponent/Card';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import productApi from '../../api/productApi';
+import Card from '../../components/CardComponent/Card';
+import Loading from '../../components/LoadingComponent/Loading';
+import './styles.scss';
 
 function ProductType() {
-    const location = useLocation();
-    console.log('location', location);
-
+    const { state } = useLocation();
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const fetchProductType = async (type) => {
-        const res = await productApi.getProductType('Convers');
-        console.log('res', res);
+        setIsLoading(true);
+        const res = await productApi.getProductType(type);
+        if (res?.status === 'OK') {
+            setProducts(res?.data);
+        }
+        setIsLoading(false);
     };
 
     useEffect(() => {
-        fetchProductType();
-    }, []);
+        if (state) {
+            fetchProductType(state);
+        }
+    }, [state]);
+
     return (
-        <div className="product__type">
-            <CardComponent style={{ width: '33%' }} />
-            <CardComponent style={{ width: '33%' }} />
-            <CardComponent style={{ width: '33%' }} />
-            <CardComponent style={{ width: '33%' }} />
-            <CardComponent style={{ width: '33%' }} />
-        </div>
+        <Loading isLoading={isLoading}>
+            <div className="product__type">
+                {products?.map((product) => (
+                    <Card
+                        style={{ width: '33%' }}
+                        key={product._id}
+                        id={product._id}
+                        countInStock={product.countInStock}
+                        description={product.description}
+                        image={product.image}
+                        price={product.price}
+                        price_old={product.price_old}
+                        rating={product.rating}
+                        title={product.title}
+                        type={product.type}
+                        sale={product.sale}
+                    />
+                ))}
+            </div>
+        </Loading>
     );
 }
 
