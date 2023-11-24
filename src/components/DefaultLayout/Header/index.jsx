@@ -9,6 +9,7 @@ import logo from '../../../assets/images/header/logo.webp';
 import { resetUser } from '../../../redux/slides/userSlides';
 import Image from '../../ImageComponent/Image';
 import './styles.scss';
+import { searchProduct } from '../../../redux/slides/productSlides';
 
 function Header() {
     const dispatch = useDispatch();
@@ -26,8 +27,8 @@ function Header() {
     };
 
     const handleSearch = () => {
+        dispatch(searchProduct(valueSearch));
         navigate('/search');
-        console.log('value', valueSearch);
     };
     // const handleKeyDown = (e) => {
     //     if (e.keyCode) {

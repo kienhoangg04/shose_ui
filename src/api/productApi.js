@@ -49,6 +49,14 @@ const productApi = {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-all-type`);
         return res.data;
     },
+    async getSearchProduct(search) {
+        if (search.length > 0) {
+            const res = await axios.get(
+                `${process.env.REACT_APP_API_URL}/product/get-all?filter=title&filter=${search}`,
+            );
+            return res.data;
+        }
+    },
 };
 
 export default productApi;
