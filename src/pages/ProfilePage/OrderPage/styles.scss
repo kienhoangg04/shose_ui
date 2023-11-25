@@ -37,6 +37,31 @@
             padding: 15px;
             border: 1px solid #ebebeb;
             color: #1c1c1c;
+
+            & .form_action {
+                display: flex;
+                & .btn_cancel {
+                    color: #35c0c5;
+                    font-size: 20px;
+                    cursor: pointer;
+                    margin-top: 4px;
+
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+                & .btn_vieworder {
+                    color: #35c0c5;
+                    font-size: 20px;
+                    cursor: pointer;
+                    margin-top: 4px;
+                    margin-right: 10px;
+
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+            }
         }
     }
 }

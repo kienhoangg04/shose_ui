@@ -11,6 +11,7 @@ import './styles.scss';
 // import 'slick-carousel/slick/slick-theme.css';
 import { useQuery } from 'react-query';
 import productApi from '../../api/productApi';
+import Loading from '../../components/LoadingComponent/Loading';
 
 function HomePage() {
     let settings = {
@@ -32,29 +33,31 @@ function HomePage() {
         const res = await productApi.getAllProduct();
         return res;
     };
-    const { data: products } = useQuery(['products'], fetchProductAll);
+    const { data: products, isLoading } = useQuery(['products'], fetchProductAll);
 
     return (
         <>
             <section className="section__product--new">
                 <TitleComponent title="Sản phẩm" href="san-pham-moi" />
-                <Slider {...settings} className="slick__product">
-                    {products?.data?.map((product) => (
-                        <Card
-                            key={product._id}
-                            id={product._id}
-                            countInStock={product.countInStock}
-                            description={product.description}
-                            image={product.image}
-                            price={product.price}
-                            price_old={product.price_old}
-                            rating={product.rating}
-                            title={product.title}
-                            type={product.type}
-                            sale={product.sale}
-                        />
-                    ))}
-                </Slider>
+                <Loading isLoading={isLoading}>
+                    <Slider {...settings} className="slick__product">
+                        {products?.data?.map((product) => (
+                            <Card
+                                key={product._id}
+                                id={product._id}
+                                countInStock={product.countInStock}
+                                description={product.description}
+                                image={product.image}
+                                price={product.price}
+                                price_old={product.price_old}
+                                rating={product.rating}
+                                title={product.title}
+                                type={product.type}
+                                sale={product.sale}
+                            />
+                        ))}
+                    </Slider>
+                </Loading>
                 <Banner title="Hàng mới về" src={banner1} alt="Hàng mới về" />
 
                 <TitleComponent title="Sản phẩm khuyến mãi" href="san-pham-khuyen-mai" />

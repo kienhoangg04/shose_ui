@@ -10,11 +10,31 @@ const orderApi = {
         return res.data;
     },
     async getOrderByUserId(id, access_token) {
-        const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/order/get-order-details/${id}`, {
+        const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/order/get-all-order/${id}`, {
             headers: {
                 token: `Beare ${access_token}`,
             },
         });
+        return res.data;
+    },
+    async getDetailsOrder(id, access_token) {
+        const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/order/get-details-order/${id}`, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
+    async cancelOrder(id, access_token, orderItems) {
+        const res = await axiosJWT.delete(
+            `${process.env.REACT_APP_API_URL}/order/cancel-order/${id}`,
+            { data: orderItems },
+            {
+                headers: {
+                    token: `Beare ${access_token}`,
+                },
+            },
+        );
         return res.data;
     },
 };
