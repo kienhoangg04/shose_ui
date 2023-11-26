@@ -45,6 +45,30 @@ const orderApi = {
         });
         return res.data;
     },
+    async deleteManyOrder(access_token, data) {
+        const res = await axiosJWT.post(`${process.env.REACT_APP_API_URL}/order/delete-many`, data, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
+    async remove(id, access_token) {
+        const res = await axiosJWT.delete(`${process.env.REACT_APP_API_URL}/order/delete-order/${id}`, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
+    async update(id, access_token, data) {
+        const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/order/update-order/${id}`, data, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
 };
 
 export default orderApi;

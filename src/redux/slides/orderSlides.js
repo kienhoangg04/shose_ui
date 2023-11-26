@@ -9,9 +9,9 @@ const initialState = {
     taxPrice: 0,
     totalPrice: 0,
     user: '',
-    isPaid: false,
+    isPaid: 0,
     paiAt: '',
-    isDelivered: false,
+    isDelivered: 0,
     delivered: '',
 };
 

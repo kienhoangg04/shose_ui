@@ -34,6 +34,32 @@ export const renderOptions = (data) => {
     return results;
 };
 
+export const renderOptionisDelivered = (data) => {
+    let results = [];
+    if (data) {
+        results = data?.map((opt) => {
+            return {
+                value: opt,
+                label: orderContant.isDelivered[opt],
+            };
+        });
+    }
+    return results;
+};
+
+export const renderOptionisPaid = (data) => {
+    let results = [];
+    if (data) {
+        results = data?.map((opt) => {
+            return {
+                value: opt,
+                label: orderContant.isPaid[opt],
+            };
+        });
+    }
+    return results;
+};
+
 export const convertPrice = (price) => {
     try {
         const result = price?.toLocaleString().replaceAll(',', '.');

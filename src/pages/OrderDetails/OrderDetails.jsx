@@ -33,6 +33,7 @@ function OrderDetails() {
         navigate('/profile/orders');
     };
 
+    console.log('data', data);
     return (
         <Container>
             <Loading isLoading={isLoading}>
@@ -78,13 +79,15 @@ function OrderDetails() {
                                     <Col>
                                         <h2 className="title">Thanh toán</h2>
                                         <p className="text_item">
-                                            {data?.data?.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'}
+                                            {data?.data?.isPaid === 0 ? 'Chưa thanh toán' : 'Đã thanh toán'}
                                         </p>
                                     </Col>
                                     <Col>
                                         <h2 className="title">Trạng thái giao hàng</h2>
                                         <p className="text_item">
-                                            {data?.data?.isDelivered ? 'Đã giao hàng' : 'Chưa giao hàng'}
+                                            {data?.data?.isDelivered === 0 && 'Chưa vận chuyển'}
+                                            {data?.data?.isDelivered === 1 && 'Đang vận chuyển'}
+                                            {data?.data?.isDelivered === 2 && 'Đã giao hàng'}
                                         </p>
                                     </Col>
                                 </Row>
@@ -98,7 +101,10 @@ function OrderDetails() {
                         <Col xs={5}>
                             <div className="order_box">
                                 <div className="head_success">
-                                    <h2>Đơn hàng #0112 (1)</h2>
+                                    <h2>
+                                        Đơn hàng #{data?.data && (data?.data?._id).substr(-4, 4)} (
+                                        {data?.data?.orderItems.length})
+                                    </h2>
                                 </div>
                                 <div className="order__summary">
                                     <div className="product_form">

@@ -1,16 +1,16 @@
+import { faBinoculars, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import orderApi from '../../../api/orderApi';
 import Loading from '../../../components/LoadingComponent/Loading';
+import * as message from '../../../components/Message/Message';
 import { orderContant } from '../../../contant';
+import { useMutationHook } from '../../../hooks/useMutationHook';
 import { convertPrice } from '../../../utils';
 import './styles.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faBinoculars } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import { useMutationHook } from '../../../hooks/useMutationHook';
-import * as message from '../../../components/Message/Message';
 
 function OrderPage() {
     const navigate = useNavigate();
@@ -42,14 +42,18 @@ function OrderPage() {
     });
 
     const handleCancelOrder = (order) => {
-        mutation.mutate(
-            { id: order._id, token: user?.access_token, orderItems: order?.orderItems },
-            {
-                onSuccess: () => {
-                    queryOrder.refetch();
+        if (order.isDelivered === 0) {
+            mutation.mutate(
+                { id: order._id, token: user?.access_token, orderItems: order?.orderItems },
+                {
+                    onSuccess: () => {
+                        queryOrder.refetch();
+                    },
                 },
-            },
-        );
+            );
+        } else {
+            message.warning('Không thể hủy đơn hàng!');
+        }
     };
 
     const {
@@ -89,14 +93,18 @@ function OrderPage() {
                                 {data[0]?.orderItems.length > 0 ? (
                                     data?.map((item) => (
                                         <tr>
-                                            <td>a</td>
+                                            <td>#{(item?._id).substr(-4, 4)}</td>
                                             <td>{item?.createdAt}</td>
                                             <td>
                                                 {item?.shippingAdress?.address}, {item?.shippingAdress?.city}, Việt Nam
                                             </td>
                                             <td>{convertPrice(item?.totalPrice)}</td>
                                             <td>{orderContant.payment[item?.paymentMethod]}</td>
-                                            <td>Chưa vận chuyển</td>
+                                            <td>
+                                                {item?.isDelivered === 0 && 'Chưa vận chuyển'}
+                                                {item?.isDelivered === 1 && 'Đang vận chuyển'}
+                                                {item?.isDelivered === 2 && 'Đã giao hàng'}
+                                            </td>
                                             <td>
                                                 <div className="form_action">
                                                     <FontAwesomeIcon

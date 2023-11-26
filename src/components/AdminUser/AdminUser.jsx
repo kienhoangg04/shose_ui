@@ -59,7 +59,6 @@ function AdminUser() {
                 email: res?.data.email,
                 isAdmin: res?.data.isAdmin,
                 phone: res?.data.phone,
-
                 address: res?.data.address,
             });
         }
@@ -77,23 +76,23 @@ function AdminUser() {
         }
     }, [rowSelected, isOpenDrawer]);
 
-    const handleDetailsProduct = () => {
+    const handleDetailsUser = () => {
         setIsOpenDrawer(true);
     };
-    const handleDeleteProduct = () => {
+    const handleDeleteUser = () => {
         setIsModalOpenDelete(true);
     };
     //
     const renderAction = () => {
         return (
-            <div>
+            <div style={{ display: 'flex' }}>
                 <DeleteOutlined
                     style={{ fontSize: '20px', color: 'red', cursor: 'pointer', marginRight: '6px' }}
-                    onClick={handleDeleteProduct}
+                    onClick={handleDeleteUser}
                 />
                 <EditOutlined
                     style={{ fontSize: '20px', color: '#35c0c5', cursor: 'pointer' }}
-                    onClick={handleDetailsProduct}
+                    onClick={handleDetailsUser}
                 />
             </div>
         );

@@ -124,7 +124,7 @@ function AdminProduct() {
     //
     const renderAction = () => {
         return (
-            <div>
+            <div style={{ display: 'flex' }}>
                 <DeleteOutlined
                     style={{ fontSize: '20px', color: 'red', cursor: 'pointer', marginRight: '6px' }}
                     onClick={handleDeleteProduct}
