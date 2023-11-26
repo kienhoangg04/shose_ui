@@ -1,7 +1,7 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Rate } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +14,10 @@ import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import TitleComponent from '../../components/TitleComponent/TitleComponent';
 import { addOrderProduct } from '../../redux/slides/orderSlides';
-import { convertPrice } from '../../utils';
+import { convertPrice, initFacebookSDK } from '../../utils';
 import './styles.scss';
+import LikeButtonComponent from '../../components/LikeButtonComponent/LikeButtonComponent';
+import CommentComponent from '../../components/CommentComponent/CommentComponent';
 
 function DetailsProduct() {
     const user = useSelector((state) => state.user);
@@ -32,6 +34,11 @@ function DetailsProduct() {
     };
     const { id } = useParams();
     const [numProduct, setNumproduct] = useState(1);
+
+    //
+    useEffect(() => {
+        initFacebookSDK();
+    }, []);
 
     //
     const fetchGetDetailsProduct = async (context) => {
@@ -103,27 +110,6 @@ function DetailsProduct() {
                                                 <ImageCard src={productDetails?.image} alt={productDetails?.title} />
                                             </a>
                                         </div>
-                                        {/* <div className="product__thumn">
-                                            <div className="thumb__product--details">
-                                                <div className="slick__track">
-                                                    <div className="item">
-                                                        <a href="">
-                                                            <ImageCard src={img} alt="card" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="item">
-                                                        <a href="">
-                                                            <ImageCard src={img} alt="card" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="item">
-                                                        <a href="">
-                                                            <ImageCard src={img} alt="card" />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </Col>
                                 <Col xs lg={7} className="col-xs-12 col-sm-12 col-md-12 col-lg-7">
@@ -171,18 +157,9 @@ function DetailsProduct() {
                                             </div>
                                         </div>
                                         <div className="form__product col-sm-12 col-lg-12 col-md-12 col-xs-12">
-                                            {/* <div className="box__variant">
-                                                <div className="form__group">
-                                                    <div className="selector__wrapper">
-                                                        <label htmlFor="">Màu sắc</label>
-                                                        <select name="" id="" className="single__option--selector">
-                                                            <option value="Nâu">Nâu</option>
-                                                            <option value="Xanh">Xanh</option>
-                                                            <option value="Đỏ">Đỏ</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div> */}
+                                            <LikeButtonComponent
+                                                dataHref={'https://developers.facebook.com/docs/plugins/'}
+                                            />
                                             <div className="form__group">
                                                 <div className="form__product--content">
                                                     <div className="quantity">
@@ -238,6 +215,13 @@ function DetailsProduct() {
                         </div>
                     </div>
                 </Loading>
+
+                <div>
+                    <CommentComponent
+                        dataHref={'https://developers.facebook.com/docs/plugins/comments#configurator'}
+                        width={'1125'}
+                    />
+                </div>
 
                 <TitleComponent title="Sản phẩm liên quan" href="san-pham-lien-quan" />
                 <Slider {...settings} className="slick__product2">

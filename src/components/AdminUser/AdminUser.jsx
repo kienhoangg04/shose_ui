@@ -149,7 +149,7 @@ function AdminUser() {
         return res;
     };
     const queryUser = useQuery(['users'], getAllUsers);
-    const { data: users } = queryUser;
+    const { data: users, isLoading: isLoadingUser } = queryUser;
 
     //
     const dataTable =
@@ -263,6 +263,7 @@ function AdminUser() {
 
             <div>
                 <TableComponent
+                    loading={isLoadingUser}
                     dataTable={dataTable}
                     columns={columns}
                     onRow={(record, rowIndex) => {

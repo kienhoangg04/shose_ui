@@ -190,7 +190,7 @@ function AdminProduct() {
     };
     const queryProduct = useQuery(['products'], getAllProducts);
     const queryTypeProduct = useQuery(['type-product'], fetchAllTypeProduct);
-    const { data: products } = queryProduct;
+    const { data: products, isLoading: isLoadingProduct } = queryProduct;
     const { data: typeProduct } = queryTypeProduct;
 
     //
@@ -391,6 +391,7 @@ function AdminProduct() {
             </div>
             <div>
                 <TableComponent
+                    loading={isLoadingProduct}
                     dataTable={dataTable}
                     columns={columns}
                     onRow={(record, rowIndex) => {
