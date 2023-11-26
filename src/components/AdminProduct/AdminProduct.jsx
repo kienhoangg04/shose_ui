@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import productApi from '../../api/productApi';
 import { useMutationHook } from '../../hooks/useMutationHook';
-import { getBase64, renderOptions } from '../../utils';
+import { convertPrice, getBase64, renderOptions } from '../../utils';
 import DrawerComponent from '../DrawerComponent/DrawerComponent';
 import InputComponent from '../InputComponent/InputComponent';
 import * as message from '../Message/Message';
@@ -197,7 +197,12 @@ function AdminProduct() {
     const dataTable =
         products?.data?.length &&
         products?.data.map((product) => {
-            return { ...product, key: product._id };
+            return {
+                ...product,
+                key: product._id,
+                price: convertPrice(product?.price),
+                price_old: convertPrice(product?.price_old),
+            };
         });
 
     //

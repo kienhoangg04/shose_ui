@@ -37,6 +37,14 @@ const orderApi = {
         );
         return res.data;
     },
+    async getAllOrder(access_token) {
+        const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/order/get-all-order`, {
+            headers: {
+                token: `Beare ${access_token}`,
+            },
+        });
+        return res.data;
+    },
 };
 
 export default orderApi;

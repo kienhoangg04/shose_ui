@@ -125,6 +125,7 @@ function Checkout() {
                     shippingPrice: diliveryPriceMemo,
                     totalPrice: priceMemo + diliveryPriceMemo,
                     user: user?.id,
+                    email: user?.email,
                 });
             }
         } else {

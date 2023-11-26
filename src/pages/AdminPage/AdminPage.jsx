@@ -54,7 +54,7 @@ function AdminPage() {
 
     return (
         <div>
-            <Row>
+            <Row style={{ margin: '0' }}>
                 <Col xs lg={3}>
                     <Menu
                         mode="inline"
