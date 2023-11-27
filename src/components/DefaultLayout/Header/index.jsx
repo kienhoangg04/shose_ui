@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import userApi from '../../../api/userApi';
 import logo from '../../../assets/images/header/logo.webp';
+import { searchProduct } from '../../../redux/slides/productSlides';
 import { resetUser } from '../../../redux/slides/userSlides';
 import Image from '../../ImageComponent/Image';
 import './styles.scss';
-import { searchProduct } from '../../../redux/slides/productSlides';
 
 function Header() {
     const dispatch = useDispatch();
@@ -38,6 +38,18 @@ function Header() {
 
     const handleOnChange = (e) => {
         setValueSearch(e.target.value);
+    };
+
+    const handleNavigateType = (type) => {
+        navigate(
+            `/product/${type
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/ /g, '_')}`,
+            {
+                state: type,
+            },
+        );
     };
 
     return (
@@ -146,11 +158,15 @@ function Header() {
                 <Container>
                     <Row>
                         <ul className="menu__list">
-                            <li className="menu__item">Trang Chủ</li>
+                            <li className="menu__item">
+                                <Link to={'/'}>Trang Chủ</Link>
+                            </li>
                             <li className="menu__item">
                                 <Link to={'/introduce'}>Giới Thiệu</Link>
                             </li>
-                            <li className="menu__item">Sản Phẩm</li>
+                            <li className="menu__item" onClick={() => handleNavigateType('Sản phẩm')}>
+                                Sản Phẩm
+                            </li>
                             <li className="menu__item">Tin Tức</li>
                             <li className="menu__item">Bản Đồ</li>
                             <li className="menu__item">Liên Hệ</li>

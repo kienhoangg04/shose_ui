@@ -13,6 +13,12 @@ const productApi = {
             return res.data;
         }
     },
+    async getProductHome(type) {
+        if (type) {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-product-home?filter=${type}`);
+            return res.data;
+        }
+    },
     async getDetailsProduct(id) {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-details/${id}`);
         return res.data;

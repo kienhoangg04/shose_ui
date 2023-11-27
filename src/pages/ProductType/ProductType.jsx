@@ -11,7 +11,12 @@ function ProductType() {
     const [isLoading, setIsLoading] = useState(false);
     const fetchProductType = async (type) => {
         setIsLoading(true);
-        const res = await productApi.getProductType(type);
+        let res = {};
+        if (type === 'Sản phẩm') {
+            res = await productApi.getAllProduct();
+        } else {
+            res = await productApi.getProductType(type);
+        }
         if (res?.status === 'OK') {
             setProducts(res?.data);
         }
