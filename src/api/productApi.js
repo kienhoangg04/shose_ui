@@ -19,6 +19,12 @@ const productApi = {
             return res.data;
         }
     },
+    async getProductRelate(id) {
+        if (id) {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/product/get-product-relate`, { id: id });
+            return res.data;
+        }
+    },
     async getDetailsProduct(id) {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-details/${id}`);
         return res.data;

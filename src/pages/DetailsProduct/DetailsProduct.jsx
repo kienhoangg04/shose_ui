@@ -48,8 +48,18 @@ function DetailsProduct() {
             return res.data;
         }
     };
+    const fetchProductRelate = async (context) => {
+        const id = context?.queryKey && context?.queryKey[1];
+        if (id) {
+            const res = await productApi.getProductRelate(id);
+            return res.data;
+        }
+    };
 
     const { isLoading, data: productDetails } = useQuery(['product-details', id], fetchGetDetailsProduct, {
+        enabled: !!id,
+    });
+    const { isLoading: isLoadingRelate, data: productRelate } = useQuery(['product-relate', id], fetchProductRelate, {
         enabled: !!id,
     });
 
@@ -91,10 +101,6 @@ function DetailsProduct() {
             );
         }
     };
-
-    // console.log('user', user);
-    // console.log('location', location);
-    // console.log('productDetails', productDetails);
 
     return (
         <div className="form__background">
@@ -224,14 +230,25 @@ function DetailsProduct() {
                 </div>
 
                 <TitleComponent title="Sản phẩm liên quan" href="san-pham-lien-quan" />
-                <Slider {...settings} className="slick__product2">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </Slider>
+                <Loading isLoading={isLoadingRelate}>
+                    <Slider {...settings} className="slick__product2">
+                        {productRelate?.map((product) => (
+                            <Card
+                                key={product._id}
+                                id={product._id}
+                                countInStock={product.countInStock}
+                                description={product.description}
+                                image={product.image}
+                                price={product.price}
+                                price_old={product.price_old}
+                                rating={product.rating}
+                                title={product.title}
+                                type={product.type}
+                                sale={product.sale}
+                            />
+                        ))}
+                    </Slider>
+                </Loading>
             </Container>
         </div>
     );
