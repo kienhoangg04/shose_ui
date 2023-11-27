@@ -124,14 +124,14 @@ function DetailsProduct() {
                                         <div className="group__status">
                                             <span className="first__status">
                                                 <span className="a_name">Thương hiệu: </span>
-                                                <span className="status__name"> Convers</span>
+                                                <span className="status__name">{productDetails?.type}</span>
                                                 <span className="border-xs"> | </span>
                                             </span>
                                             <span className="first__status status_2">
                                                 <span className="a_name">Tình trạng</span>
                                                 <span className="status__name">
                                                     <a href="true">
-                                                        {productDetails?.countInStock > 0 ? 'Còn hàng' : 'Hết hàng'}
+                                                        {productDetails?.quantity > 0 ? 'Còn hàng' : 'Hết hàng'}
                                                     </a>
                                                 </span>
                                                 <span className="border-xs"> | </span>
@@ -158,7 +158,7 @@ function DetailsProduct() {
                                                 <div className="rte">
                                                     <p>- Bảo hành 12 tháng</p>
                                                     <p>- Xuất xứ: Mỹ</p>
-                                                    <p>- Chất liệu: Vải</p>
+                                                    <p>- Mô tả: {productDetails?.description}</p>
                                                 </div>
                                             </div>
                                         </div>

@@ -41,7 +41,7 @@ function HomePage() {
     return (
         <>
             <section className="section__product--new">
-                <TitleComponent title="Sản phẩm" href="san-pham-moi" />
+                <TitleComponent title="Sản phẩm" href="san-pham" />
                 <Loading isLoading={isLoading}>
                     <Slider {...settings} className="slick__product">
                         {products?.data?.map((product) => (

@@ -93,6 +93,11 @@ function AdminOrder() {
     };
     const columns = [
         {
+            title: 'Code',
+            dataIndex: 'codeorder',
+            sorter: (a, b) => a.codeorder.length - b.codeorder.length,
+        },
+        {
             title: 'Fullname',
             dataIndex: 'fullname',
             sorter: (a, b) => a.fullname.length - b.fullname.length,
@@ -140,6 +145,7 @@ function AdminOrder() {
             return {
                 ...order,
                 key: order._id,
+                codeorder: (order?._id).substr(-4, 4),
                 fullname: order?.shippingAdress?.fullname,
                 phone: order?.shippingAdress?.phone,
                 address: order?.shippingAdress?.address,
@@ -269,8 +275,6 @@ function AdminOrder() {
             isDelivered: value,
         });
     };
-
-    console.log('setStateOrderDetails', stateOrderDetails);
 
     return (
         <div>
