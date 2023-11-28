@@ -97,6 +97,7 @@ function DetailsProduct() {
                         price: productDetails?.price,
                         product: productDetails?._id,
                     },
+                    userId: user?.id,
                 }),
             );
         }

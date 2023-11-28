@@ -8,22 +8,44 @@ import userApi from '../../../api/userApi';
 import logo from '../../../assets/images/header/logo.webp';
 import { searchProduct } from '../../../redux/slides/productSlides';
 import { resetUser } from '../../../redux/slides/userSlides';
+import { removeAllOrder } from '../../../redux/slides/orderSlides';
 import Image from '../../ImageComponent/Image';
 import './styles.scss';
+import { useMutationHook } from '../../../hooks/useMutationHook';
+import cardApi from '../../../api/cardApi';
 
 function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const order = useSelector((state) => state.order);
-
     const [valueSearch, setValueSearch] = useState('');
+
+    const mutationAddCard = useMutationHook((data) => {
+        const { token, ...rests } = data;
+        const res = cardApi.createCard(token, { ...rests });
+        return res;
+    });
+    const { data } = mutationAddCard;
+
+    const handleOrder = async () => {
+        if (user?.access_token && order?.orderItems) {
+            await cardApi.remove(order?.user, user?.access_token);
+            mutationAddCard.mutate({
+                token: user?.access_token,
+                orderItems: order?.orderItems,
+                user: order?.user,
+            });
+        }
+        dispatch(removeAllOrder());
+    };
 
     const handleLogout = async () => {
         await userApi.logoutUser();
         navigate('/');
         localStorage.removeItem('access_token');
         dispatch(resetUser());
+        handleOrder();
     };
 
     const handleSearch = () => {

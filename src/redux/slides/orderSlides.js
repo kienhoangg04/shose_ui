@@ -20,12 +20,13 @@ export const orderSlide = createSlice({
     initialState,
     reducers: {
         addOrderProduct: (state, action) => {
-            const { orderItem } = action.payload;
+            const { orderItem, userId } = action.payload;
             const itemOrder = state?.orderItems?.find((item) => item?.product === orderItem.product);
             if (itemOrder) {
                 itemOrder.amount += orderItem?.amount;
             } else {
                 state.orderItems.push(orderItem);
+                state.user = userId;
             }
         },
         increaseAmount: (state, action) => {
@@ -48,10 +49,25 @@ export const orderSlide = createSlice({
             const itemOrders = state?.orderItems?.filter((item) => !listChecked.includes(item.product));
             state.orderItems = itemOrders;
         },
+        removeAllOrder: (state) => {
+            state.orderItems = [];
+        },
+        updateOrder: (state, action) => {
+            const { orderItems = [], user = '' } = action.payload;
+            state.orderItems = orderItems;
+            state.user = user;
+        },
     },
 });
 
-export const { addOrderProduct, increaseAmount, decreaseAmount, removeOrderProduct, removeAllOrderProduct } =
-    orderSlide.actions;
+export const {
+    addOrderProduct,
+    increaseAmount,
+    decreaseAmount,
+    removeOrderProduct,
+    removeAllOrderProduct,
+    removeAllOrder,
+    updateOrder,
+} = orderSlide.actions;
 
 export default orderSlide.reducer;

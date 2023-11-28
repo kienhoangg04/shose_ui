@@ -12,6 +12,8 @@ import { useMutationHook } from '../../hooks/useMutationHook';
 import { updateUser } from '../../redux/slides/userSlides';
 import './styles.scss';
 import { Col, Container, Row } from 'react-bootstrap';
+import cardApi from '../../api/cardApi';
+import { updateOrder } from '../../redux/slides/orderSlides';
 
 function SignInPage() {
     const navigate = useNavigate();
@@ -46,6 +48,7 @@ function SignInPage() {
                 const decoded = jwt_decode(data?.access_token);
                 if (decoded?.id) {
                     handleGetDetailsUser(decoded?.id, data?.access_token);
+                    handleGetCard(decoded?.id, data?.access_token);
                 }
             }
         }
@@ -55,6 +58,12 @@ function SignInPage() {
     const handleGetDetailsUser = async (id, token) => {
         const res = await userApi.get(id, token);
         dispatch(updateUser({ ...res?.data, access_token: token }));
+    };
+
+    //
+    const handleGetCard = async (id, token) => {
+        const res = await cardApi.getAllCard(token, id);
+        dispatch(updateOrder({ ...res?.data }));
     };
 
     //
