@@ -18,6 +18,7 @@ import { convertPrice, initFacebookSDK } from '../../utils';
 import './styles.scss';
 import LikeButtonComponent from '../../components/LikeButtonComponent/LikeButtonComponent';
 import CommentComponent from '../../components/CommentComponent/CommentComponent';
+import Crum from '../../components/CrumComponent/Crum';
 
 function DetailsProduct() {
     const user = useSelector((state) => state.user);
@@ -105,6 +106,12 @@ function DetailsProduct() {
 
     return (
         <div className="form__background">
+            <Crum
+                title={productDetails?.title}
+                to={`/details/${productDetails?._id}`}
+                titletwo={productDetails?.type}
+                totwo={`/product/${productDetails?.type}`}
+            />
             <Container>
                 <Loading isLoading={isLoading}>
                     <div className="product__main">

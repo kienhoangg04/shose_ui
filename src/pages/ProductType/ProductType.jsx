@@ -1,10 +1,10 @@
+import { Pagination } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import productApi from '../../api/productApi';
 import Card from '../../components/CardComponent/Card';
 import Loading from '../../components/LoadingComponent/Loading';
 import './styles.scss';
-import { Pagination } from 'antd';
 
 function ProductType() {
     const { state } = useLocation();
@@ -26,7 +26,6 @@ function ProductType() {
         if (res?.status === 'OK') {
             setProducts(res?.data);
             setPanigate({ ...panigate, total: res?.total });
-            console.log('res', res);
         }
         setIsLoading(false);
     };
