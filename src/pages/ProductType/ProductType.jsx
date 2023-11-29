@@ -4,30 +4,42 @@ import productApi from '../../api/productApi';
 import Card from '../../components/CardComponent/Card';
 import Loading from '../../components/LoadingComponent/Loading';
 import './styles.scss';
+import { Pagination } from 'antd';
 
 function ProductType() {
     const { state } = useLocation();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const fetchProductType = async (type) => {
+    const [panigate, setPanigate] = useState({
+        page: 0,
+        limit: 9,
+        total: 1,
+    });
+    const fetchProductType = async (type, page, limit) => {
         setIsLoading(true);
         let res = {};
         if (type === 'Sản phẩm') {
-            res = await productApi.getAllProduct();
+            res = await productApi.getAllProduct(page, limit);
         } else {
-            res = await productApi.getProductType(type);
+            res = await productApi.getProductType(type, page, limit);
         }
         if (res?.status === 'OK') {
             setProducts(res?.data);
+            setPanigate({ ...panigate, total: res?.total });
+            console.log('res', res);
         }
         setIsLoading(false);
     };
 
     useEffect(() => {
         if (state) {
-            fetchProductType(state);
+            fetchProductType(state, panigate.page, panigate.limit);
         }
-    }, [state]);
+    }, [state, panigate.page, panigate.limit]);
+
+    const onChange = (current, pageSize) => {
+        setPanigate({ ...panigate, page: current - 1, pageSize: pageSize });
+    };
 
     return (
         <Loading isLoading={isLoading}>
@@ -48,6 +60,9 @@ function ProductType() {
                         sale={product.sale}
                     />
                 ))}
+            </div>
+            <div className="pagination">
+                <Pagination defaultCurrent={panigate?.page + 1} total={panigate?.total} onChange={onChange} />
             </div>
         </Loading>
     );
