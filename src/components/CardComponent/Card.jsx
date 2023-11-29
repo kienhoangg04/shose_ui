@@ -23,9 +23,9 @@ function Card(props) {
                 </div>
                 <div className="product__info">
                     <h3 className="product__name">
-                        <a href="true" title={title} tabIndex="1">
+                        <Link to={`/details/${id}`} title={title} tabIndex="1">
                             {title}
-                        </a>
+                        </Link>
                     </h3>
                     <div className="price__box">
                         {convertPrice(price)}
