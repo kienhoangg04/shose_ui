@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import userApi, { axiosJWT } from './api/userApi';
 import DefaultLayout from './components/DefaultLayout';
-import { updateUser } from './redux/slides/userSlides';
+import { resetUser, updateUser } from './redux/slides/userSlides';
 import { publicRoutes } from './routes';
 import { isJsonString } from './utils';
 
@@ -20,9 +20,9 @@ function App() {
     }, []);
 
     const handleDecoded = () => {
-        let storageData = localStorage.getItem('access_token');
+        let storageData = user?.access_token || localStorage.getItem('access_token');
         let decoded = {};
-        if (storageData && isJsonString(storageData)) {
+        if (storageData && isJsonString(storageData) && !user?.access_token) {
             storageData = JSON.parse(storageData);
             decoded = jwt_decode(storageData);
         }
@@ -35,9 +35,16 @@ function App() {
             // Add configurations here
             const currentTime = new Date();
             const { decoded } = handleDecoded();
+            let storageRefreshToken = localStorage.getItem('refresh_token');
+            const refreshToken = JSON.parse(storageRefreshToken);
+            const decodedRefreshToken = jwt_decode(refreshToken);
             if (decoded?.exp < currentTime / 1000) {
-                const data = await userApi.refreshToken();
-                config.headers['token'] = `Beare ${data?.access_token}`;
+                if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
+                    const data = await userApi.refreshToken(refreshToken);
+                    config.headers['token'] = `Beare ${data?.access_token}`;
+                } else {
+                    dispatch(resetUser());
+                }
             }
             return config;
         },
@@ -47,8 +54,10 @@ function App() {
     );
 
     const handleGetDetailsUser = async (id, token) => {
+        let storageRefreshToken = localStorage.getItem('refresh_token');
+        const refreshToken = JSON.parse(storageRefreshToken);
         const res = await userApi.get(id, token);
-        dispatch(updateUser({ ...res?.data, access_token: token }));
+        dispatch(updateUser({ ...res?.data, access_token: token, refreshToken }));
     };
 
     return (

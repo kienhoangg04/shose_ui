@@ -49,10 +49,18 @@ const userApi = {
         return res.data;
     },
 
-    async refreshToken() {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/user/refresh-token`, {
-            withCredentials: true,
-        });
+    async refreshToken(refreshToken) {
+        const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/user/refresh-token`,
+            {
+                withCredentials: true,
+            },
+            {
+                headers: {
+                    token: `Beare ${refreshToken}`,
+                },
+            },
+        );
         return res.data;
     },
 

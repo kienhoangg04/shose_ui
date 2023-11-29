@@ -2,18 +2,18 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jwt_decode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import cardApi from '../../api/cardApi';
 import userApi from '../../api/userApi';
 import InputForm from '../../components/InputForm/InputForm';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import { useMutationHook } from '../../hooks/useMutationHook';
+import { updateOrder } from '../../redux/slides/orderSlides';
 import { updateUser } from '../../redux/slides/userSlides';
 import './styles.scss';
-import { Col, Container, Row } from 'react-bootstrap';
-import cardApi from '../../api/cardApi';
-import { updateOrder } from '../../redux/slides/orderSlides';
 
 function SignInPage() {
     const navigate = useNavigate();
@@ -44,6 +44,7 @@ function SignInPage() {
             }
             message.success('Đăng nhập thành công!');
             localStorage.setItem('access_token', JSON.stringify(data?.access_token));
+            localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token));
             if (data?.access_token) {
                 const decoded = jwt_decode(data?.access_token);
                 if (decoded?.id) {
@@ -56,8 +57,10 @@ function SignInPage() {
 
     //
     const handleGetDetailsUser = async (id, token) => {
+        const storage = localStorage.getItem('refresh_token');
+        const refreshToken = JSON.parse(storage);
         const res = await userApi.get(id, token);
-        dispatch(updateUser({ ...res?.data, access_token: token }));
+        dispatch(updateUser({ ...res?.data, access_token: token, refreshToken }));
     };
 
     //

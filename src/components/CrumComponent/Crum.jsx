@@ -14,9 +14,9 @@ function Crum(props) {
                     <Col xs lg={12} className="text-left">
                         <ul className="crumb__list">
                             <li className="home">
-                                <a href="true">
+                                <Link to={'/'}>
                                     <span>Trang Chủ</span>
-                                </a>
+                                </Link>
                                 <span className="mr_lr">
                                     <FontAwesomeIcon icon={faSlash} />
                                 </span>
@@ -32,7 +32,7 @@ function Crum(props) {
                                 </li>
                             )}
                             <li>
-                                <Link to={to}>
+                                <Link to>
                                     <strong>
                                         <span>{title}</span>
                                     </strong>
