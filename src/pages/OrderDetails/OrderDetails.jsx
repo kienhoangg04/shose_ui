@@ -33,7 +33,6 @@ function OrderDetails() {
         navigate('/profile/orders');
     };
 
-    console.log('data', data);
     return (
         <Container>
             <Loading isLoading={isLoading}>
@@ -52,6 +51,7 @@ function OrderDetails() {
                                         <h2 className="title">Thông tin mua hàng</h2>
                                         <ul className="info__list">
                                             <li className="info__item">{data?.data?.shippingAdress?.fullname}</li>
+                                            <li className="info__item">{data?.data?.shippingAdress?.email}</li>
                                             <li className="info__item">+86{data?.data?.shippingAdress?.phone}</li>
                                         </ul>
                                     </Col>

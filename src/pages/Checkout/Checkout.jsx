@@ -2,18 +2,19 @@ import { faAngleLeft, faCircleDot, faRightToBracket } from '@fortawesome/free-so
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { PayPalButton } from 'react-paypal-button-v2';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import orderApi from '../../api/orderApi';
+import userApi from '../../api/userApi';
 import ImageComponent from '../../components/ImageComponent/Image';
 import InputComponent from '../../components/InputComponent/InputComponent';
-import './styles.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMutationHook } from '../../hooks/useMutationHook';
-import userApi from '../../api/userApi';
-import { convertPrice } from '../../utils';
-import * as message from '../../components/Message/Message';
-import orderApi from '../../api/orderApi';
 import Loading from '../../components/LoadingComponent/Loading';
+import * as message from '../../components/Message/Message';
+import { useMutationHook } from '../../hooks/useMutationHook';
 import { removeAllOrderProduct } from '../../redux/slides/orderSlides';
+import { convertPrice } from '../../utils';
+import './styles.scss';
 
 function Checkout() {
     const order = useSelector((state) => state.order);
@@ -29,6 +30,7 @@ function Checkout() {
         phone: '',
         address: '',
     });
+    const [sdkReady, setSdkReady] = useState(false);
 
     const mutationUpdate = useMutationHook((data) => {
         const { id, token, ...rests } = data;
@@ -66,6 +68,11 @@ function Checkout() {
         }
     }, [priceMemo]);
 
+    const priceTotalMemoUSA = useMemo(() => {
+        const result = (priceMemo + diliveryPriceMemo) / 24190;
+        return Math.round(result);
+    }, [priceMemo, diliveryPriceMemo]);
+
     useEffect(() => {
         if (isSuccessOrder && dataAddOrder?.status === 'OK') {
             const arrayOrder = [];
@@ -102,6 +109,48 @@ function Checkout() {
         }
     }, [user]);
 
+    //
+    const addPaypalScript = async () => {
+        const data = process.env.REACT_APP_CLIENT_ID;
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+        script.async = true;
+        script.onload = () => {
+            setSdkReady(true);
+        };
+        document.body.appendChild(script);
+    };
+
+    useEffect(() => {
+        if (!window.paypal) {
+            addPaypalScript();
+        } else {
+            setSdkReady(true);
+        }
+    }, []);
+    const onSuccessPaypal = (details, data) => {
+        if (details.status === 'COMPLETED') {
+            mutationUpdate.mutate({ id: user?.id, token: user?.access_token, ...stateUser });
+            mutationAddOrder.mutate({
+                token: user?.access_token,
+                orderItems: order?.orderItems,
+                fullname: stateUser?.name,
+                address: stateUser?.address,
+                phone: stateUser?.phone,
+                city: stateUser?.city,
+                paymentMethod: payment,
+                itemsPrice: priceMemo,
+                shippingPrice: diliveryPriceMemo,
+                totalPrice: priceMemo + diliveryPriceMemo,
+                user: user?.id,
+                email: user?.email,
+                isPaid: 1,
+                paidAt: details?.update_time,
+            });
+        }
+    };
+    //
     const handleOnChangeInfo = (e) => {
         setStateUser({
             ...stateUser,
@@ -145,12 +194,6 @@ function Checkout() {
         }
         setPayment(checkValue);
     };
-
-    // console.log('order', order);
-    // console.log('user', user);
-    // console.log('stateUser', stateUser);
-    // console.log('dataUpdate', dataUpdate);
-    // console.log('payment', payment);
 
     return (
         <div>
@@ -253,7 +296,7 @@ function Checkout() {
                                                 value="card"
                                                 onClick={handleChecked}
                                             />
-                                            <label htmlFor="card">Thanh toán qua thẻ tín dụng</label>
+                                            <label htmlFor="card">Thanh toán qua Paypal</label>
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +367,18 @@ function Checkout() {
                                     <FontAwesomeIcon icon={faAngleLeft} />
                                     <span>Quay về giỏ hàng</span>
                                 </Link>
-                                <button onClick={handleOrder}>Đặt hàng</button>
+                                {payment === 'card' && sdkReady ? (
+                                    <PayPalButton
+                                        amount={priceTotalMemoUSA}
+                                        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                                        onSuccess={onSuccessPaypal}
+                                        onError={() => {
+                                            alert('Error');
+                                        }}
+                                    />
+                                ) : (
+                                    <button onClick={handleOrder}>Đặt hàng</button>
+                                )}
                             </div>
                         </div>
                     </Col>
