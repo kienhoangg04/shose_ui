@@ -1,14 +1,14 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import userApi from '../../api/userApi';
 import InputForm from '../../components/InputForm/InputForm';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import { useMutationHook } from '../../hooks/useMutationHook';
 import './styles.scss';
-import { Col, Container, Row } from 'react-bootstrap';
 
 function SignUpPage() {
     const navigate = useNavigate();
