@@ -279,9 +279,7 @@ function AdminOrder() {
     return (
         <div>
             <TitleComponent title="Quản Lý Đơn Hàng" stylediv={{ marginTop: '20px' }} />
-            <div className="pie_chart">
-                <PieChartComponent data={orders?.data} />
-            </div>
+
             <div className="table_order">
                 <TableComponent
                     dataTable={dataTable}
